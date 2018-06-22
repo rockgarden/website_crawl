@@ -1,7 +1,8 @@
+
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
-
 
 def login(login_url, login_name, login_password):
     driver = webdriver.Safari()
