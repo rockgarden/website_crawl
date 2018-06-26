@@ -59,11 +59,3 @@ if __name__ == '__main__':
     name_input = input('请输入你的账号\n')
     passwd_input = input('请输入你的密码\n')
     cookies = login(name_input, passwd_input, url)
-
-
-
-
-
-
-
-

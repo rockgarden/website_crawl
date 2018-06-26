@@ -6,12 +6,12 @@ import time
 import requests
 
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) '
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko)'
                   'Chrome/58.0.3029.110 Safari/537.36'
 }
 
-
 driver = webdriver.Safari()
+
 
 def login(login_url, login_name, login_password):
     """
@@ -37,7 +37,7 @@ def login(login_url, login_name, login_password):
     # print(password_input.get_property("placeholder"))
     submit = login_form.find_element_by_class_name('ui-submit ui-form-submit')  # ui-submitting ui-form-submitting
     auto_login_checkbox = login_form.find_element_by_name('autologin')
-    print(password_input.get_property("placeholder"))
+    # print(password_input.get_property("placeholder"))
 
     account_input.clear()
     password_input.clear()
@@ -52,15 +52,19 @@ def login(login_url, login_name, login_password):
     time.sleep(5)
 
     futu_cookies = driver.get_cookies()
-    driver.close()
+
     return futu_cookies
 
 
 def sign_in_for_credits(credits_url):
     driver.get(credits_url)
-    time.sleep(1)
+    time.sleep(5)
     sign_box = driver.find_element_by_id("signBox")
-    login_form = driver.find_element_by_name("loginFormWrapper")
+    print(sign_box)
+    sign_box.click()
+    time.sleep(5)
+    sign_href = driver.find_element_by_id("signIn")
+    print(sign_href.text)
 
 
 def req_by_cookie(cookies):
@@ -71,13 +75,20 @@ def req_by_cookie(cookies):
 
 
 if __name__ == '__main__':
-    url = 'https://www.futunn.com/account/credits-task'  # 'https://passport.futu5.com'
-    name = input('请输入用户名:\n')
-    password = input('请输入密码:\n')
+    url = "https://passport.futu5.com/"
+    credits_url = "https://www.futunn.com/account/credits-task"
+    mobile_credits_task_url = "https://mobile.futunn.com/credits#/task"
+
+    name = "rockgarden@sina.com"  # input('请输入用户名:\n')
+    password = "freestar"  # input('请输入密码:\n')
+
     cookies = login(url, name, password)
 
+    sign_in_for_credits(url)
 
-    print(cookies)
+    driver.close()
+
+    # print(cookies)
     '''
     [
     {'domain': '.futu5.com', 'secure': False, 'expiry': 1592972626000, 'httpOnly': False, 
@@ -146,21 +157,22 @@ if __name__ == '__main__':
     {'domain': '.futunn.com', 'secure': False, 'expiry': 0, 'httpOnly': True, 
     'value': 'thgjkpmqj1s77pia114fqg2fm0', 'path': '/', 
     'name': 'PHPSESSID'}, 
-    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 
-    'value': 'HPkgWCP0D7cxmVz%2FlMRGIk%2FJwUBhPTEwMDAwNTM4JmI9MjAxMTM2Jms9QUtJRENXblN2cWJ4UDkza3lYdW55ZTNNYXVJUWp2angydFlEJmU9MTUzMjQ5NzQ1OSZ0PTE1Mjk5MDU0NTkmcj0yNjc2MzAyNTkmdT0mZj0%3D', 'path': '/', 
-    'name': 'ci_sig'}, 
-    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 
-    'value': '294152', 'path': '/', 
-    'name': 'uid'}, 
-    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 
-    'value': 'rvLpevWQeiWzaEQm4WyR1geRp%2F9ZMPFc7g1x3CuZk6JAQeQ994We0d%2B8HO4H1IeKVJ2%2BbyGf5UP1R0MD9PXRBZOHpa5xmsI6jzyfFMWVFovo1sUze2aIP%2F4tTOXDLx7i', 'path': '/', 
-    'name': 'web_sig'}, 
-    {'domain': 'www.futunn.com', 'secure': False, 'expiry': 0, 'httpOnly': True, 
-    'value': '3ozpClqD-BOqf0UDGzVzWv1yeArcf1Lu', 'path': '/', 
-    'name': '_csrf'}, 
-    {'domain': 'www.futunn.com', 'secure': False, 'expiry': 1529906355000, 'httpOnly': False, 
-    'value': '7587343559275141d1207d24944b360a', 'path': '/', 
-    'name': 'tgw_l7_route'}
+    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 'value': 'HPkgWCP0D7cxmVz%2FlMRGIk%2FJwUBhPTEwMDAwNTM4JmI9MjAxMTM2Jms9QUtJRENXblN2cWJ4UDkza3lYdW55ZTNNYXVJUWp2angydFlEJmU9MTUzMjQ5NzQ1OSZ0PTE1Mjk5MDU0NTkmcj0yNjc2MzAyNTkmdT0mZj0%3D', 'path': '/', 'name': 'ci_sig'}, 
+    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 'value': '294152', 'path': '/', 'name': 'uid'}, 
+    {'domain': '.futunn.com', 'secure': False, 'expiry': 1531201459000, 'httpOnly': True, 'value': 'rvLpevWQeiWzaEQm4WyR1geRp%2F9ZMPFc7g1x3CuZk6JAQeQ994We0d%2B8HO4H1IeKVJ2%2BbyGf5UP1R0MD9PXRBZOHpa5xmsI6jzyfFMWVFovo1sUze2aIP%2F4tTOXDLx7i', 'path': '/', 'name': 'web_sig'}, 
+    {'domain': 'www.futunn.com', 'secure': False, 'expiry': 0, 'httpOnly': True, 'value': '3ozpClqD-BOqf0UDGzVzWv1yeArcf1Lu', 'path': '/', 'name': '_csrf'}, 
+    {'domain': 'www.futunn.com', 'secure': False, 'expiry': 1529906355000, 'httpOnly': False, 'value': '7587343559275141d1207d24944b360a', 'path': '/', 'name': 'tgw_l7_route'}
     ]
+    
+    [
+    {'domain': 'passport.futu5.com', 'secure': True, 'expiry': 1531203181000, 'httpOnly': True, 'value': '294152', 'path': '/', 'name': 'p_login_uid'}, 
+    {'domain': 'passport.futu5.com', 'secure': True, 'expiry': 1531203181000, 'httpOnly': True, 'value': 'Bz%2B1xPlrDTNqNEAgrm5uMYlcIu1zN4OjT3ldbIgfv3TGFmZMTF0EZVjzWaG53iPA5Rd6nDe1uzype44%2FMMyqvO2sA64JDSlq9plEhwyzw7FOUH8iNh%2F2sqyNY5ZlE%2FDlr5h7m%2BFwdqdFPnGd3ZapssiWOBtlv4gzM94aXF5gNSY%3D', 'path': '/', 'name': 'p_login_uid_2'}, 
+    {'domain': 'passport.futu5.com', 'secure': True, 'expiry': 1531203181000, 'httpOnly': True, 'value': 'Bz%2B1xPlrDTNqNEAgrm5uMYlcIu1zN4OjT3ldbIgfv3TGFmZMTF0EZVjzWaG53iPA5Rd6nDe1uzype44%2FMMyqvO2sA64JDSlq9plEhwyzw7FOUH8iNh%2F2sqyNY5ZlE%2FDlr5h7m%2BFwdqdFPnGd3ZapssiWOBtlv4gzM94aXF5gNSY%3D', 'path': '/', 'name': 'super_sig'}, 
+    {'domain': '.futu5.com', 'secure': False, 'expiry': 1581833580000, 'httpOnly': False, 'value': '1529993578957533', 'path': '/', 'name': 'cipher_device_id'}, {'domain': '.futu5.com', 'secure': False, 'expiry': 1529995378000, 'httpOnly': False, 'value': '99ccc0a6-9e56-4719-926a-f431d13143cf_true', 'path': '/', 'name': 'a4201d90f5554adf_gr_session_id'}, 
+    {'domain': '.futu5.com', 'secure': False, 'expiry': 1624601578000, 'httpOnly': False, 'value': '6dfd32ac-eba3-448f-b668-ab1d5931eda4', 'path': '/', 'name': 'gr_user_id'}, {'domain': 'passport.futu5.com', 'secure': False, 'expiry': 0, 'httpOnly': True, 'value': 'j4q8flq9g4o5fn1cao1h7jaqo2', 'path': '/', 'name': 'PHPSESSID'}, 
+    {'domain': 'passport.futu5.com', 'secure': False, 'expiry': 0, 'httpOnly': True, 'value': '2CapjJAlXOU6ypyLrN8JwU39EZB0h5oP', 'path': '/', 'name': '_csrf-frontend'}, 
+    {'domain': 'passport.futu5.com', 'secure': False, 'expiry': 1529993599000, 'httpOnly': False, 'value': 'd928ab0b0a9aead18c44dc0f7e113f26', 'path': '/', 'name': 'tgw_l7_route'}
+    ]
+
 
     '''

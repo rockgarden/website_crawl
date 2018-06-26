@@ -22,7 +22,7 @@ HEADERS = {
     'Referer': 'https://www.zhihu.com/',
     'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 '
                   '(KHTML, like Gecko) Chrome/56.0.2924.87 Mobile Safari/537.36'
-    }
+}
 LOGIN_URL = 'https://www.zhihu.com/signup'
 LOGIN_API = 'https://www.zhihu.com/api/v3/oauth/sign_in'
 FORM_DATA = {
@@ -69,7 +69,7 @@ class ZhihuAccount(object):
             'username': self._input_data('username', '登录手机'),
             'password': self._input_data('password', '密码')
         })
-        timestamp = str(int(time.time()*1000))
+        timestamp = str(int(time.time() * 1000))
         self.login_data.update({
             'captcha': self._get_captcha(headers),
             'timestamp': timestamp,
@@ -146,7 +146,7 @@ class ZhihuAccount(object):
                 print('点击所有倒立的汉字，按回车提交')
                 points = plt.ginput(7)
                 capt = json.dumps({'img_size': [200, 44],
-                                   'input_points': [[i[0]/2, i[1]/2] for i in points]})
+                                   'input_points': [[i[0] / 2, i[1] / 2] for i in points]})
             else:
                 img.show()
                 capt = input('请输入图片里的验证码：')
