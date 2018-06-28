@@ -73,6 +73,8 @@ function(t, e, n) {
 }
 
 https://passport.futu5.com/login/salt?device_id=1529634044507277&account=rockgarden%40sina.com&_=1529635695456
+https://passport.futu5.com/login/salt?device_id=1529634044507277&account=rockgarden%40sina.com&_=1530152897975
+
 
 response:
 {

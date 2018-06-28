@@ -1,9 +1,11 @@
 # futu5.com webdriver_Safari
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 import time
 import requests
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko)'
@@ -21,34 +23,36 @@ def login(login_url, login_name, login_password):
     :param login_password:
     :return:
     """
-    # driver = webdriver.Safari()
+
     driver.get(login_url)
     time.sleep(1)
 
+    # tab切换 div 确认选择 login href
+    # <div class="navs-slider"><a href="#login" class="active">登录</a>
     login_tab = driver.find_element_by_class_name('active')
-    # print(login_tab.text)
     login_tab.click()
 
+    # 获取父元素 login from
     login_form = driver.find_element_by_id("loginFormWrapper")
 
+    # 获取子元素 帐号元素
     account_input = login_form.find_element_by_name('email')
-    # print(account_input.get_property("placeholder"))
     password_input = login_form.find_element_by_name('password')
-    # print(password_input.get_property("placeholder"))
-    submit = login_form.find_element_by_class_name('ui-submit ui-form-submit')  # ui-submitting ui-form-submitting
-    auto_login_checkbox = login_form.find_element_by_name('autologin')
-    # print(password_input.get_property("placeholder"))
-
+    # 填充帐号信息
     account_input.clear()
     password_input.clear()
-
     account_input.send_keys(login_name)
     password_input.send_keys(login_password)
 
+    # 获取子元素 自动login
+    auto_login_checkbox = login_form.find_element_by_name('autologin')
     # TODO: An element command could not be completed because the element is not visible on the page.
     # auto_login_checkbox.click()
 
+    # 获取子元素 提交
+    submit = login_form.find_element_by_class_name('ui-submit ui-form-submit')  # ui-submitting ui-form-submitting
     submit.click()
+
     time.sleep(5)
 
     futu_cookies = driver.get_cookies()
@@ -59,12 +63,45 @@ def login(login_url, login_name, login_password):
 def sign_in_for_credits(credits_url):
     driver.get(credits_url)
     time.sleep(5)
-    sign_box = driver.find_element_by_id("signBox")
-    print(sign_box)
-    sign_box.click()
-    time.sleep(5)
+
+    # # 获取元素 签到
+    # sign_box = driver.find_element_by_id("signBox")
+    # print(sign_box)
+    # sign_box.click()
+
+    # 获取元素 签到
     sign_href = driver.find_element_by_id("signIn")
-    print(sign_href.text)
+    if sign_href.get_attribute('class') != "signIn none":
+        sign_href.click()
+
+    time.sleep(5)
+
+    # 获取父元素 myTasks
+    my_tasks = driver.find_element_by_name("myTasks")
+    items = my_tasks.find_elements_by_class_name("item")
+    print("积分任务数:", len(items))
+
+    # 获取子元素 发贴任务
+    # <a name="gotoWork" title="发表牛牛圈" class="btn btn2 " href="https://www.futunn.com/nnq">立即发表</a>
+    posting = my_tasks.find_element_by_css_selector("[title=牛牛圈精华内容]")
+    if posting.get_attribute('class') != "btn btn2 none":
+        posting.click()
+
+    time.sleep(5)
+
+    # 通过检查元素是否被加载来检查是否跳转网页，其中10的解释：10秒内每隔0.5毫秒扫描1次页面变化，直到指定的元素
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'publishFeedWrapper')))
+
+    # 获取元素 发表帖子
+    pub_post = driver.find_element_by_id("publishFeedWrapper").find_element_by_link_text("发表帖子")
+    pub_post.click()
+
+    # 通过检查元素是否被加载来检查是否跳转网页
+    WebDriverWait(driver, 10).until(driver.find_element_by_id("futuEditorWrapper"))
+
+    title_input = driver.find_element_by_class_name("inputTxtWrapper").find_element_by_id("title")
+    title_input.send_keys("rockgarden")
+
 
 
 def req_by_cookie(cookies):
@@ -84,7 +121,7 @@ if __name__ == '__main__':
 
     cookies = login(url, name, password)
 
-    sign_in_for_credits(url)
+    sign_in_for_credits(credits_url)
 
     driver.close()
 

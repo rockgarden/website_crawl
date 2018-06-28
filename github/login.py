@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 BASE_URL = 'https://github.com/login'
 LOGIN_URL = 'https://github.com/session'
 SESSION = requests.session()
