@@ -87,8 +87,6 @@ def sign_in_for_credits(credits_url):
     if posting.get_attribute('class') != "btn btn2 none":
         posting.click()
 
-    time.sleep(5)
-
     # 通过检查元素是否被加载来检查是否跳转网页，其中10的解释：10秒内每隔0.5毫秒扫描1次页面变化，直到指定的元素
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'publishFeedWrapper')))
 
@@ -96,12 +94,22 @@ def sign_in_for_credits(credits_url):
     pub_post = driver.find_element_by_id("publishFeedWrapper").find_element_by_link_text("发表帖子")
     pub_post.click()
 
-    # 通过检查元素是否被加载来检查是否跳转网页
-    WebDriverWait(driver, 10).until(driver.find_element_by_id("futuEditorWrapper"))
+    # TODO: 弹出新窗口,须要重新获取 url
+    driver.get(article_url)
 
-    title_input = driver.find_element_by_class_name("inputTxtWrapper").find_element_by_id("title")
+    # TODO:通过检查元素是否被加载来检查是否跳转网页
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'futuEditorWrapper')))
+
+    title_input = driver.find_element_by_class_name("inputTxtWrapper").find_element_by_class_name("inputTxt")
     title_input.send_keys("rockgarden")
 
+    # 切入 iframe
+    driver.switch_to.frame("ueditor_0")
+    content_input = driver.find_element_by_class_name("view")
+    print(content_input.get_attribute('innerHTML'))
+    content_input.send_keys("涨涨涨！")
+    # 切出 iframe
+    driver.switchTo().defaultContent()
 
 
 def req_by_cookie(cookies):
@@ -115,6 +123,7 @@ if __name__ == '__main__':
     url = "https://passport.futu5.com/"
     credits_url = "https://www.futunn.com/account/credits-task"
     mobile_credits_task_url = "https://mobile.futunn.com/credits#/task"
+    article_url = "https://www.futunn.com/nnq/article"
 
     name = "rockgarden@sina.com"  # input('请输入用户名:\n')
     password = "freestar"  # input('请输入密码:\n')
