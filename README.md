@@ -28,7 +28,6 @@
 
 ## 其它
 
-- 如果有童鞋自己也实现了某些站点的模拟登陆，可以给我提PR。站点太多了，一个人维护确实是比较大的工作量.
 - 授人以鱼不如授人以渔，如果感觉自己分析模拟登陆过程还有比较大的困难的，可以仔细阅读一下我写的三篇文章，包括了两种典型的模拟登陆和三种分析思路.
  - [模拟登陆csdn](http://www.rookiefly.cn/detail/65)
  - [模拟登陆微博](http://www.jianshu.com/p/816594c83c74)
@@ -41,3 +40,7 @@
 - [selenium](https://pypi.org/project/selenium/)
 - [rsa](https://pypi.org/project/rsa/)
 - [Pillow](https://pypi.org/project/Pillow/)
+
+
+## Chrome 驱动
+- [chromedriver](http://npm.taobao.org/mirrors/chromedriver/)
