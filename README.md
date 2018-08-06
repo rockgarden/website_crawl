@@ -32,15 +32,14 @@
  - [模拟登陆csdn](http://www.rookiefly.cn/detail/65)
  - [模拟登陆微博](http://www.jianshu.com/p/816594c83c74)
  - [模拟登陆百度网盘](http://www.jianshu.com/p/efcf030e68c5)
-- 如果你有什么比较难登陆的网站，比如发现用了selenium+webdriver都还登陆不了的网站，欢迎给我提issue.
-- 如果该repo对大家有帮助，给个star鼓励鼓励吧.
+
 
 ## 需要安装的库
 - [ExecJS](https://pypi.org/project/PyExecJS/)
 - [selenium](https://pypi.org/project/selenium/)
 - [rsa](https://pypi.org/project/rsa/)
 - [Pillow](https://pypi.org/project/Pillow/)
-
+- [schedule](https://pypi.python.org/pypi/schedule) 定时任务调度的库
 
 ## Chrome 驱动
 - [chromedriver](http://npm.taobao.org/mirrors/chromedriver/)

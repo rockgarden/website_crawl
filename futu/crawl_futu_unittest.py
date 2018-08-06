@@ -17,13 +17,10 @@
 # 授权  safaridriver启动webdriverd托管本地Web服务器的服务。要允许此操作，请/usr/bin/safaridriver手动运行一次并完成身份验证提示。
 # 直接前往该目录，双击执行，如果用命令行之行会报错（报错原因待研究）
 
+import time
 import unittest
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-import time
-
-from futu.login_by_selenium import driver
 
 
 class CrawlFutuTest(unittest.TestCase):
@@ -34,6 +31,8 @@ class CrawlFutuTest(unittest.TestCase):
 
     name = "rockgarden@sina.com"  # input('请输入用户名:\n')
     password = "freestar"  # input('请输入密码:\n')
+
+    driver = webdriver.Safari()
 
     def test_setup_module(self):
         CrawlFutuTest.driver = webdriver.Safari()
@@ -57,16 +56,16 @@ class CrawlFutuTest(unittest.TestCase):
         # self.assertTrue(len(feature_count) > 0)
 
     def test_login(self):
-        driver.get(self.url)
+        self.driver.get(self.url)
         time.sleep(1)
 
         # tab切换 div 确认选择 login href
         # <div class="navs-slider"><a href="#login" class="active">登录</a>
-        login_tab = driver.find_element_by_class_name('active')
+        login_tab = self.driver.find_element_by_class_name('active')
         login_tab.click()
 
         # 获取父元素 login from
-        login_form = driver.find_element_by_id("loginFormWrapper")
+        login_form = self.driver.find_element_by_id("loginFormWrapper")
 
         # 获取子元素 帐号元素
         account_input = login_form.find_element_by_name('email')
